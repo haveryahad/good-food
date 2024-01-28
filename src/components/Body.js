@@ -4,7 +4,7 @@ import RestaurantCard from "./RestaurantCard";
 
 const Body = () => {
   const [listOfRestaurants, setlistOfRestaurants] = useState(resList);
-  
+  const [searchInput, setSearchInput] = useState('');
   return (
     <div className="body">
       <div className="search-filter-wrapper">
@@ -37,14 +37,39 @@ const Body = () => {
             className="filter-btn"
             onClick={() => {
               setlistOfRestaurants(resList);
-              
+              setSearchInput("");
             }}
           >
             Remove Filter
           </button>
         </div>
         <div className="search-bar">
-          
+        <input
+            id="searchInputBox"
+            type="text"
+            className="search-input"
+            placeholder="Search here ..."
+            value={searchInput}
+            onChange={(e) => {
+              setSearchInput(e.target.value);
+            }}
+            onKeyUp={(e) => {
+              setSearchInput(e.target.value);
+              let filteredList = resList.filter((res) => {
+                //Search in Restaurant Name and Cuisines
+                return (
+                  res.info.name
+                    .toLowerCase()
+                    .search(searchInput.toLowerCase()) != -1 ||
+                  res.info.cuisines
+                    .join(" ")
+                    .toLowerCase()
+                    .search(searchInput.toLowerCase()) != -1
+                );
+              });
+              setlistOfRestaurants(filteredList);
+            }}
+          ></input>
         </div>
       </div>
       <div className="res-container">
