@@ -3,3 +3,5 @@ export const CDN_URL = 'https://media-assets.swiggy.com/swiggy/image/upload/fl_l
 export const LOGO_URL = 'https://www.logodesign.net/logo/smoking-burger-with-lettuce-3624ld.png';
 
 export const CART_IMG_URL = 'https://media.istockphoto.com/id/1138644570/vector/shopping-cart-icon-design-cart-icon-symbol-design.jpg?s=612x612&w=0&k=20&c=_lTGkSkJ6ha8ZNiKD8XWVtLNyTjQ74HCu_c4WFio27g=';
+
+export const RESTAURANT_DATA_URL = 'https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.2373032&lng=73.1261315&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING';
