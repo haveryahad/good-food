@@ -1,11 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import resList from "../utils/mockData";
 import RestaurantCard from "./RestaurantCard";
+import Shimmer from "./Shimmer";
+import { RESTAURANT_DATA_URL } from "../utils/constants";
 
 const Body = () => {
-  const [listOfRestaurants, setlistOfRestaurants] = useState(resList);
+  const [listOfRestaurants, setlistOfRestaurants] = useState([]);
   const [searchInput, setSearchInput] = useState('');
-  return (
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    const restaurantData = await fetch(RESTAURANT_DATA_URL);
+    const resJson = await restaurantData.json();
+    setlistOfRestaurants(resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+  };
+
+  //Conditional Rendering for Shimmer Effect
+  return !listOfRestaurants?.length ? <Shimmer/> : (
     <div className="body">
       <div className="search-filter-wrapper">
         <div className="filter-container">
