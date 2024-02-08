@@ -27,6 +27,10 @@ body {
     padding: 20px 10px;
     cursor: pointer;
 }
+.nav-items > ul > li a {
+    color: initial;
+    text-decoration-line: none;
+}
 
 .nav-items .cart {
     width: 100px;
