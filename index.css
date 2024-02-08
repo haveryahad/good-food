@@ -121,3 +121,17 @@ body {
     background-color: #f0f0f0;
     border-radius: 10px;
 }
+.menu-wrapper {
+    padding: 10px 10%;
+}
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+}
+.menu-item-text {
+    padding: 0 10px;
+}
+.menu-item-description {
+    font-size: 14px;
+}
