@@ -9,6 +9,8 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import Mission from "./components/Mission";
+import Vision from "./components/Vision";
 
 const AppLayout = () => {
   return (
@@ -37,6 +39,16 @@ const appRouter = createBrowserRouter([
       {
         path: "/Contact",
         element: <Contact />,
+        children: [
+          {
+            path: "Mission",
+            element: <Mission />,
+          },
+          {
+            path: "Vision",
+            element: <Vision />,
+          },
+        ],
       },
       {
         path: "/SignUp",
