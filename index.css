@@ -27,7 +27,7 @@ body {
     padding: 20px 10px;
     cursor: pointer;
 }
-.nav-items > ul > li a {
+.nav-items > ul > li a, .res-container a {
     color: initial;
     text-decoration-line: none;
 }
@@ -43,7 +43,7 @@ body {
 .nav-items > ul .login-btn {
     width: 100px;
     padding: 10px 20px;
-    border: 1px solid auto;
+    border: 1px solid gray;
     border-radius: 10px;
     background-color: #FFFFFF;
     outline: none;
@@ -74,6 +74,17 @@ body {
     max-height: 200px;
     border-radius: 10px;
 }
+.res-card .res-cuisines {
+    display: inline-block;
+    padding: 5px 0;
+}
+.filter-container button {
+    background-color: #FFFFFF;
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
 .search-filter-wrapper {
     display: flex;
 }
@@ -86,7 +97,7 @@ body {
 }
 .search-input {
     border-radius: 10px;
-    border: 1px solid black;
+    border: 1px solid gray;
     width: 400px;
     outline: none;
 }
@@ -134,4 +145,52 @@ body {
 }
 .menu-item-description {
     font-size: 14px;
+}
+.sign-up-form {
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.sign-up-form > div {
+    width: 60%;
+}
+.sign-up-form label, .sign-up-form input {
+    display: block;
+    width: 100%;
+}
+
+.sign-up-form label {
+    margin: 20px 0 5px;
+}
+
+.sign-up-form input {
+    border-width: 0 0 1px 0;
+    border-color: steelblue;
+    padding: 5px 0;
+}
+.sign-up-form input:focus {
+    outline: none;
+}
+.sign-up-form .submit-btn {
+    width: 200px;
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: white;
+    border: 1px solid steelblue;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.sign-up-form .submit-btn:hover {
+    background-color: steelblue;
+    border-color: white;
+    color: #FFFFFF;
+}
+.user-card {
+    width: 60%;
+    margin: 20px auto;
+    border: 1px solid black;
+    padding: 20px;
 }
