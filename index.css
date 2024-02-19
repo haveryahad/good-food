@@ -1,4 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
+/* 
 body {
     font-family: cursive;
 }
@@ -193,4 +197,4 @@ body {
     margin: 20px auto;
     border: 1px solid black;
     padding: 20px;
-}
+} */
