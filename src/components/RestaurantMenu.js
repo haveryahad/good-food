@@ -1,59 +1,78 @@
-import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import APIError from "./APIError";
 import { useParams } from "react-router-dom";
-import { RESTAURANT_MENU_URL, MENU_ITEM_IMAGE_URL } from "../utils/constants";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import MenuCategories from "./MenuCategories";
+import { Link } from "react-router-dom";
+import GreenStar from "../utils/greenStar";
+import star from "../assets/green-star.svg";
+import { useContext, useState } from "react";
+import UserContext from "../utils/UserContext";
 
 const RestaurantMenu = () => {
-  // const [resInfo, setResInfo] = useState(null);
   const { resId } = useParams();
+  const [showItems, setShowItems] = useState(false);
+  const [showIndex, setShowIndex] = useState("");
 
   let resInfo = useRestaurantMenu(resId) || null;
-  // useEffect(() => {
-  //   fetchMenu();
-  // }, []);
-  // const fetchMenu = async () => {
-  //   const menu = await fetch(RESTAURANT_MENU_URL + resId);
-  //   const menuJson = await menu.json();
-  //   console.log(menuJson);
-  //   setResInfo(menuJson);
-  // };
-
-  if (resInfo == null) return <Shimmer />;
-  console.log("resInfo:" + resInfo);
-  const { name } = resInfo?.data?.cards[0]?.card?.card?.info;
-  const { itemCards, title } =
-    resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[2].card
-      ?.card;
-  return (
-    <div className="menu-wrapper">
-      <h2>{name}</h2>
-      <h3>Menu</h3>
-      <h4>{title}</h4>
-      <div>
-        {itemCards.map((item) => (
-          <div
-            className="menu-item"
-            key={item.card.info.id}
-          >
-            <div className="menu-item-text">
-              <div>
-                {item.card.info.name} - &#8377;{" "}
-                {item.card.info.price / 100 ||
-                  item.card.info.defaultPrice / 100}
-              </div>
-              <p className="menu-item-description">
-                {item.card.info.description}
-              </p>
+  const { loggedInUser } = useContext(UserContext);
+  console.log(loggedInUser);
+  try {
+    if (resInfo == null) return <Shimmer page="menu" />;
+    const { name, areaName, sla, cuisines, avgRating, totalRatingsString } =
+      resInfo?.data?.cards[2]?.card?.card?.info ||
+      resInfo?.data?.cards[0]?.card?.card?.info;
+    const sections =
+      resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
+      resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
+    const itemSections = sections.filter(
+      (item) =>
+        item.card.card["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+    console.log(itemSections);
+    document.title = name;
+    return (
+      <div className="menu-wrapper w-6/12 m-auto">
+        <div className="text-gray-400 text-xs pb-8">
+          <Link to="/">Home</Link> / <span className="font-bold">{name}</span>
+        </div>
+        <div className="flex justify-between items-center p-2 border-y-2 border-dotted">
+          <div>
+            <p>Hi {loggedInUser}!</p>
+            <p className="text-xl font-bold">{name}</p>
+            <p className="font-light text-sm">{cuisines.join(", ")}</p>
+            <p className="font-light text-sm">
+              {areaName + ", " + sla.lastMileTravelString}
+            </p>
+          </div>
+          <div className="border-2 p-1 h-16">
+            <div className="border-b-2 flex items-center justify-center text-sm">
+              {/* <GreenStar /> */}
+              <span>❇️</span>
+              <p className="p-1 text-green-700 font-bold">{avgRating}</p>
             </div>
-            <div className="menu-item-image">
-              <img src={MENU_ITEM_IMAGE_URL + item.card.info.imageId}></img>
+            <div className="p-1 text-[10px] text-gray-500 font-semibold">
+              {totalRatingsString}
             </div>
           </div>
+        </div>
+        {itemSections.map((section, index) => (
+          <MenuCategories
+            key={section.card.card.title}
+            section={section}
+            showItems={index === showIndex ? true : false}
+            setShowIndex={() => setShowIndex(index)}
+            setShowItems={() => setShowItems(false)}
+            index={index}
+          />
         ))}
       </div>
-    </div>
-  );
+    );
+  } catch (err) {
+    console.log(err);
+    return <APIError />;
+  }
 };
 
 export default RestaurantMenu;

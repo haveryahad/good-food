@@ -2,6 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .bg-custom {
+        --bg-color: #f28f79;
+        background-color: var(--bg-color);
+    }
+    .bg-shimmer {
+        --bg-color: #f0f0f0;
+        background-color: var(--bg-color);
+    }
+}
 /* 
 body {
     font-family: cursive;

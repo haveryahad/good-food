@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useContext, useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
@@ -8,6 +8,8 @@ import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import UserContext from "./utils/UserContext";
+import resList from "./utils/mockData";
 // import Mission from "./components/Mission";
 // import Vision from "./components/Vision";
 
@@ -17,11 +19,20 @@ const Mission = lazy(() => import("./components/Mission"));
 const Vision = lazy(() => import("./components/Vision"));
 
 const AppLayout = () => {
+  const [loggedInUser, setLoggedInUser] = useState("Default User");
+  const userName = useContext(UserContext);
+  useEffect(() => {
+    setLoggedInUser("Cutie");
+  }, []);
   return (
-    <div className="app">
-      <Header />
-      <Outlet />
-    </div>
+    <UserContext.Provider
+      value={{ loggedInUser: loggedInUser, setLoggedInUser: setLoggedInUser }}
+    >
+      <div className="app">
+        <Header />
+        <Outlet />
+      </div>
+    </UserContext.Provider>
   );
 };
 

@@ -1,5 +1,5 @@
+import UserContext from "../utils/UserContext";
 import User from "./User";
-import UserClass from "./UserClass";
 import React from "react";
 
 class About extends React.Component {
@@ -9,15 +9,15 @@ class About extends React.Component {
     this.state = {
       counter: 0,
     };
-    console.log(`Render Phase: Parent Constructor`);
+    // console.log(`Render Phase: Parent Constructor`);
   }
 
   componentDidMount() {
-    console.log(`Commit Phase: Parent Component Did Mount`);
+    // console.log(`Commit Phase: Parent Component Did Mount`);
   }
 
   componentDidUpdate() {
-    console.log(`Updating :: Commit Phase: Parent Component Did Update`);
+    // console.log(`Updating :: Commit Phase: Parent Component Did Update`);
   }
 
   componentWillUnmount() {
@@ -31,33 +31,18 @@ class About extends React.Component {
     };
 
     const { counter } = this.state;
-    console.log(`Render Phase: Parent Render`);
+    // console.log(`Render Phase: Parent Render`);
     return (
       <>
         <div>About Us Page</div>
-        <div>Counter: {counter}</div>
-        <button
-          onClick={() => {
-            this.setState({ counter: counter + 1 });
-          }}
-        >
-          Update Counter
-        </button>
-        {/* <User
-            {...userData}
-            componentType="Functional"
-          /> */}
-        <UserClass
+        <div>
+          <UserContext.Consumer>
+            {({ loggedInUser }) => <h1>{loggedInUser}</h1>}
+          </UserContext.Consumer>
+        </div>
+        <User
           {...userData}
-          componentType="First"
-        />
-        <UserClass
-          {...userData}
-          componentType="Second"
-        />
-        <UserClass
-          {...userData}
-          componentType="Third"
+          componentType="Functional"
         />
       </>
     );
