@@ -12,25 +12,18 @@ import UserContext from "../utils/UserContext";
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const [showItems, setShowItems] = useState(false);
-  const [showIndex, setShowIndex] = useState("");
+  const [showIndex, setShowIndex] = useState(0);
 
   let resInfo = useRestaurantMenu(resId) || null;
   const { loggedInUser } = useContext(UserContext);
-  console.log(loggedInUser);
   try {
     if (resInfo == null) return <Shimmer page="menu" />;
     const { name, areaName, sla, cuisines, avgRating, totalRatingsString } =
-      resInfo?.data?.cards[2]?.card?.card?.info ||
-      resInfo?.data?.cards[0]?.card?.card?.info;
-    const sections =
-      resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
-      resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards;
-    const itemSections = sections.filter(
-      (item) =>
-        item.card.card["@type"] ===
-        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
-    );
-    console.log(itemSections);
+      getResInfo(resInfo);
+
+    const sections = getSectionInfo(resInfo);
+    const itemSections = getFilteredSections(sections);
+
     document.title = name;
     return (
       <div className="menu-wrapper w-6/12 m-auto">
@@ -61,10 +54,15 @@ const RestaurantMenu = () => {
           <MenuCategories
             key={section.card.card.title}
             section={section}
-            showItems={index === showIndex ? true : false}
-            setShowIndex={() => setShowIndex(index)}
-            setShowItems={() => setShowItems(false)}
             index={index}
+            showItems={showIndex == index}
+            showIndex={showIndex}
+            setShowIndex={() => {
+              setShowIndex(index);
+            }}
+            setShowItems={(item) => {
+              setShowItems(item);
+            }}
           />
         ))}
       </div>
@@ -75,4 +73,25 @@ const RestaurantMenu = () => {
   }
 };
 
+const getResInfo = (resInfo) => {
+  return (
+    resInfo?.data?.cards[2]?.card?.card?.info ||
+    resInfo?.data?.cards[0]?.card?.card?.info
+  );
+};
+
+const getSectionInfo = (resInfo) => {
+  return (
+    resInfo?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
+    resInfo?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards ||
+    resInfo?.data?.cards[1]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+  );
+};
+const getFilteredSections = (sections) => {
+  return sections.filter(
+    (item) =>
+      item.card.card["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  );
+};
 export default RestaurantMenu;

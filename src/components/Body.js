@@ -5,18 +5,41 @@ import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import useRestaurantList from "../utils/useRestaurantList";
+import { RESTAURANT_DATA_URL } from "../utils/constants";
 import APIError from "./APIError";
 import UserContext from "../utils/UserContext";
+import FilterButton, { FilterActive } from "./FilterButton";
 
 const Body = () => {
   const [searchInput, setSearchInput] = useState("");
+  const [listOfRestaurants, setlistOfRestaurants] = useState([]);
+  const [isFilterActive, setFilterActive] = useState(false);
+  const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState(
+    []
+  );
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+  const fetchData = async () => {
+    const restaurantData = await fetch(RESTAURANT_DATA_URL);
+    const resJson = await restaurantData.json();
+    setlistOfRestaurants(
+      resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
+    setFilteredListOfRestaurants(
+      resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants
+    );
+  };
+
   const onlineStatus = useOnlineStatus("body");
 
   const TopRatedRestaurant = TopRestaurantCard(RestaurantCard);
-  const [listOfRestaurants, setlistOfRestaurants] = useRestaurantList();
-  console.log(listOfRestaurants);
-  // const { loggedInUser, setLoggedInUser } = useContext(UserContext);
-  // console.log(loggedInUser);
+  const FilterActiveButton = FilterActive(FilterButton);
+  //const [listOfRestaurants] = useRestaurantList();
+
   if (!onlineStatus)
     return (
       <h1>You seem to be offline, Please check your internet connection. 🔌</h1>
@@ -29,46 +52,60 @@ const Body = () => {
     ) : (
       <div className="w-11/12 m-auto">
         <div className="flex">
-          <div className="filter-container">
-            <button
-              className="m-4"
-              onClick={() => {
-                //Filter based on Average Rating
-                let filteredList = listOfRestaurants.filter(
-                  (res) => res.info.avgRating > 4.1
-                );
-                setlistOfRestaurants(filteredList);
+          <div className="filter-container flex">
+            <div>
+              <button
+                className="m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-md"
+                onClick={() => {
+                  //Filter based on Average Rating
+                  let filteredList = listOfRestaurants.filter(
+                    (res) => res.info.avgRating > 4.1
+                  );
+                  setFilteredListOfRestaurants(filteredList);
+                }}
+              >
+                Top Rated Restaurants
+              </button>
+            </div>
+            <div>
+              <button
+                className="m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-lg"
+                onClick={() => {
+                  //Filter based on Delivery Time
+                  let filteredList = listOfRestaurants.filter(
+                    (res) => res.info.sla.deliveryTime < 20
+                  );
+                  setFilteredListOfRestaurants(filteredList);
+                }}
+              >
+                Fast Delivery
+              </button>
+            </div>
+            {/* <FilterButton name="Newly Added" />
+            <FilterActiveButton
+              name="Newly Added"
+              isActive={isFilterActive}
+              setFilterActive={() => {
+                setFilterActive(!isFilterActive);
               }}
-            >
-              Top Rated Restaurants
-            </button>
-            <button
-              className="m-4"
-              onClick={() => {
-                //Filter based on Delivery Time
-                let filteredList = listOfRestaurants.filter(
-                  (res) => res.info.sla.deliveryTime < 20
-                );
-                setlistOfRestaurants(filteredList);
-              }}
-            >
-              Fast Delivery
-            </button>
-            <button
-              className="filter-btn"
-              onClick={() => {
-                setlistOfRestaurants(filteredList);
-                setSearchInput("");
-              }}
-            >
-              Remove Filter
-            </button>
+            /> */}
+            <div>
+              <button
+                className="m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-lg"
+                onClick={() => {
+                  setFilteredListOfRestaurants(listOfRestaurants);
+                  setSearchInput("");
+                }}
+              >
+                Remove Filter
+              </button>
+            </div>
           </div>
-          <div className="m-4">
+          <div className="m-2">
             <input
               id="searchInputBox"
               type="text"
-              className="search-input outline-none border px-1"
+              className="search-input outline-none border px-2 py-1 w-[450] rounded-lg focus:border-[#a09b9b] focus:shadow-lg transition-all duration-500"
               placeholder="Search here ..."
               value={searchInput}
               onChange={(e) => {
@@ -88,22 +125,13 @@ const Body = () => {
                       .search(searchInput.toLowerCase()) != -1
                   );
                 });
-                setlistOfRestaurants(filteredList);
+                setFilteredListOfRestaurants(filteredList);
               }}
             ></input>
           </div>
-          <div>
-            {/* <label htmlFor="userName">User Name: </label>
-            <input
-              id="userName"
-              className="border border-black p-1 outline-none"
-              value={loggedInUser}
-              onChange={(e) => setLoggedInUser(e.target.value)}
-            /> */}
-          </div>
         </div>
         <div className="res-container flex flex-wrap justify-between">
-          {listOfRestaurants.map((restaurant) => (
+          {filteredListOfRestaurants.map((restaurant) => (
             <Link
               key={restaurant.info.id}
               to={`/restaurants/${restaurant.info.id}`}

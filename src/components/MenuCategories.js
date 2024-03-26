@@ -3,21 +3,23 @@ import MenuItems from "./MenuItems";
 
 const MenuCategories = ({
   section,
+  index,
   showItems,
   setShowIndex,
   setShowItems,
-  index,
 }) => {
   const { title, itemCards } = section.card.card;
-
-  const handleClick = () => {
-    setShowItems();
-    showItems ? setShowItems() : setShowIndex(title);
+  const handleClick = (e) => {
+    if (!showItems) {
+      setShowIndex(index);
+    } else {
+      setShowIndex(null);
+    }
   };
   return (
     <div
       className="border-b-8 py-1 shadow-sm my-3"
-      key={section.card.card.title}
+      key={title}
     >
       <div
         className="flex justify-between cursor-pointer px-4 py-2"
@@ -28,7 +30,12 @@ const MenuCategories = ({
         </div>
         <div className="text-lg">⬇️</div>
       </div>
-      {showItems && <MenuItems itemCards={itemCards} />}
+      {showItems && (
+        <MenuItems
+          itemCards={itemCards}
+          page="menu"
+        />
+      )}
     </div>
   );
 };

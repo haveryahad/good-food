@@ -10,6 +10,9 @@ import Shimmer from "./components/Shimmer";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import UserContext from "./utils/UserContext";
 import resList from "./utils/mockData";
+import { Provider } from "react-redux";
+import appStore from "./utils/redux/appStore";
+import Cart from "./components/Cart";
 // import Mission from "./components/Mission";
 // import Vision from "./components/Vision";
 
@@ -22,17 +25,19 @@ const AppLayout = () => {
   const [loggedInUser, setLoggedInUser] = useState("Default User");
   const userName = useContext(UserContext);
   useEffect(() => {
-    setLoggedInUser("Cutie");
+    setLoggedInUser("Ahad");
   }, []);
   return (
-    <UserContext.Provider
-      value={{ loggedInUser: loggedInUser, setLoggedInUser: setLoggedInUser }}
-    >
-      <div className="app">
-        <Header />
-        <Outlet />
-      </div>
-    </UserContext.Provider>
+    <Provider store={appStore}>
+      <UserContext.Provider
+        value={{ loggedInUser: loggedInUser, setLoggedInUser: setLoggedInUser }}
+      >
+        <div className="app">
+          <Header />
+          <Outlet />
+        </div>
+      </UserContext.Provider>
+    </Provider>
   );
 };
 
@@ -88,6 +93,10 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurants/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/Cart",
+        element: <Cart />,
       },
     ],
     errorElement: <Error />,

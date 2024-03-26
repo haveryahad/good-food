@@ -33,18 +33,18 @@ class About extends React.Component {
     const { counter } = this.state;
     // console.log(`Render Phase: Parent Render`);
     return (
-      <>
-        <div>About Us Page</div>
-        <div>
+      <div className="w-4/12 m-auto border p-4">
+        <div className="font-bold text-center">About Us Page</div>
+        {/* <div>
           <UserContext.Consumer>
             {({ loggedInUser }) => <h1>{loggedInUser}</h1>}
           </UserContext.Consumer>
-        </div>
+        </div> */}
         <User
           {...userData}
           componentType="Functional"
         />
-      </>
+      </div>
     );
   }
 }
