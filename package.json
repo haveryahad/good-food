@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/haveryahad/namaste-react.git"
+    "url": "git+https://github.com/haveryahad/good-food.git"
   },
   "keywords": [
     "react",
@@ -20,9 +20,9 @@
   "author": "Ahad Havery",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/haveryahad/namaste-react/issues"
+    "url": "https://github.com/haveryahad/good-food/issues"
   },
-  "homepage": "https://github.com/haveryahad/namaste-react#readme",
+  "homepage": "https://github.com/haveryahad/good-food#readme",
   "devDependencies": {
     "parcel": "^2.11.0",
     "postcss": "^8.4.35",
