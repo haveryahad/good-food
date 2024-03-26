@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from "../assets/food-logo.png";
+import logo from "../assets/food-logo-transparent.png";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
@@ -19,7 +19,7 @@ const Header = () => {
       <div className="w-56 h-24">
         <Link to="/">
           <img
-            className="logo h-32"
+            className="logo w-44 h-24 m-auto"
             src={logo}
             alt="logo"
           ></img>
