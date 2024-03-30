@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --color-veg: #0f8a65;
+    --color-non-veg: #e43b4f;
+    /* ... */
+  }
+
 @layer utilities {
     .bg-custom {
         --bg-color: #f28f79;

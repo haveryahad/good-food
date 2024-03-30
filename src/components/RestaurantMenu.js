@@ -4,8 +4,6 @@ import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import MenuCategories from "./MenuCategories";
 import { Link } from "react-router-dom";
-import GreenStar from "../utils/greenStar";
-import star from "../assets/green-star.svg";
 import { useContext, useState } from "react";
 import UserContext from "../utils/UserContext";
 
@@ -13,6 +11,7 @@ const RestaurantMenu = () => {
   const { resId } = useParams();
   const [showItems, setShowItems] = useState(false);
   const [showIndex, setShowIndex] = useState(0);
+  const [vegFilter, setVegFilter] = useState(0);
 
   let resInfo = useRestaurantMenu(resId) || null;
   const { loggedInUser } = useContext(UserContext);
@@ -23,7 +22,7 @@ const RestaurantMenu = () => {
 
     const sections = getSectionInfo(resInfo);
     const itemSections = getFilteredSections(sections);
-
+    const changeVegFilter = () => setVegFilter(!vegFilter);
     document.title = name;
     return (
       <div className="menu-wrapper w-6/12 m-auto">
@@ -41,7 +40,6 @@ const RestaurantMenu = () => {
           </div>
           <div className="border-2 p-1 h-16">
             <div className="border-b-2 flex items-center justify-center text-sm">
-              {/* <GreenStar /> */}
               <span>❇️</span>
               <p className="p-1 text-green-700 font-bold">{avgRating}</p>
             </div>
@@ -50,11 +48,41 @@ const RestaurantMenu = () => {
             </div>
           </div>
         </div>
+        <div>
+          <label
+            htmlFor="vegFilterSwitch"
+            className="flex p-2 cursor-pointer"
+          >
+            <span>Veg Only</span>
+            <span
+              className={
+                "w-12 h-6 border-2 border-slate-500 rounded-xl inline-block transition-all duration-300 mx-2" +
+                (vegFilter ? " pl-6 border-green-700" : "")
+              }
+            >
+              <span
+                className={
+                  "bg-slate-500 rounded-xl w-5 h-5 inline-block" +
+                  (vegFilter ? " bg-[--color-veg]" : "")
+                }
+              ></span>
+            </span>
+          </label>
+          <input
+            type="checkbox"
+            id="vegFilterSwitch"
+            name="vegFilter"
+            className="hidden"
+            value={vegFilter}
+            onChange={changeVegFilter}
+          />
+        </div>
         {itemSections.map((section, index) => (
           <MenuCategories
             key={section.card.card.title}
             section={section}
             index={index}
+            vegFilter={vegFilter}
             showItems={showIndex == index}
             showIndex={showIndex}
             setShowIndex={() => {

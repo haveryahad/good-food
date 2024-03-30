@@ -4,11 +4,12 @@ import MenuItems from "./MenuItems";
 const MenuCategories = ({
   section,
   index,
+  vegFilter,
   showItems,
   setShowIndex,
   setShowItems,
 }) => {
-  const { title, itemCards } = section.card.card;
+  let { title, itemCards } = section.card.card;
   const handleClick = (e) => {
     if (!showItems) {
       setShowIndex(index);
@@ -16,7 +17,10 @@ const MenuCategories = ({
       setShowIndex(null);
     }
   };
-  return (
+  if (vegFilter) itemCards = getVegItemCards(itemCards);
+  return !itemCards?.length ? (
+    <></>
+  ) : (
     <div
       className="border-b-8 py-1 shadow-sm my-3"
       key={title}
@@ -38,5 +42,8 @@ const MenuCategories = ({
       )}
     </div>
   );
+};
+const getVegItemCards = (itemCards) => {
+  return itemCards.filter((item) => item.card.info.isVeg);
 };
 export default MenuCategories;
