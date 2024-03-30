@@ -1,5 +1,7 @@
 const Shimmer = ({ page }) => {
   const cardArray = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+  const menuArray = new Array(0, 1, 2, 3, 4, 5, 6);
+
   const ShimmerCardHome = () => {
     return (
       <div className="shimmer-card w-72 m-2 px-4">
@@ -13,7 +15,6 @@ const Shimmer = ({ page }) => {
   const ShimmerCardMenu = () => {
     return (
       <div className="shimmer-card w-full">
-        <div className="my-3 w-full h-20 rounded-lg bg-shimmer"></div>
         <div className="my-3 w-full h-20 rounded-lg bg-shimmer"></div>
       </div>
     );
@@ -34,7 +35,7 @@ const Shimmer = ({ page }) => {
       <div>
         <div className="shimmer-res-row w-16 h-16 rounded-lg bg-shimmer"></div>
       </div>
-      {cardArray.map((item) => (
+      {menuArray.map((item) => (
         <ShimmerCardMenu key={item} />
       ))}
     </div>
