@@ -22,16 +22,20 @@ const Body = () => {
     fetchData();
   }, []);
   const fetchData = async () => {
-    const restaurantData = await fetch(RESTAURANT_DATA_URL);
-    const resJson = await restaurantData.json();
-    setlistOfRestaurants(
-      resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
-    setFilteredListOfRestaurants(
-      resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants
-    );
+    try {
+      const restaurantData = await fetch(RESTAURANT_DATA_URL);
+      const resJson = await restaurantData.json();
+      setlistOfRestaurants(
+        resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setFilteredListOfRestaurants(
+        resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+    } catch (err) {
+      console.log(`Error in fetching Restaurant Data: ${err.message}`);
+    }
   };
 
   const onlineStatus = useOnlineStatus("body");
