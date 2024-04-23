@@ -3,22 +3,37 @@
 @tailwind utilities;
 
 :root {
-    --color-veg: #0f8a65;
-    --color-non-veg: #e43b4f;
-    /* ... */
-  }
+  --color-veg: #0f8a65;
+  --color-non-veg: #e43b4f;
+  /* ... */
+}
 
 @layer utilities {
-    .bg-custom {
-        --bg-color: #f28f79;
-        background-color: var(--bg-color);
+  .bg-custom {
+    --bg-color: #f28f79;
+    background-color: var(--bg-color);
+  }
+  .bg-shimmer {
+    --bg-color: #e5e5e5;
+    background: linear-gradient(to right, #e5e5e5 8%, #f0f0f0 18%, #e5e5e5 33%);
+    background-size: 1200px 100%;
+    animation-duration: 2.2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -100% 0;
     }
-    .bg-shimmer {
-        --bg-color: #f0f0f0;
-        background-color: var(--bg-color);
+    100% {
+      background-position: 100% 0;
     }
+  }
 }
-/* 
+/*
 body {
     font-family: cursive;
 }
