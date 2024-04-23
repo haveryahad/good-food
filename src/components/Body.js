@@ -24,17 +24,17 @@ const Body = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [coordinates]);
 
   const currentPosition = async (position) => {
     console.log(position);
     setCoordinates(position.coords);
-    await fetchData();
   };
 
   const getLocation = async () => {
     if (navigator.geolocation) {
-      await navigator.geolocation.getCurrentPosition(currentPosition);
+      await navigator.geolocation.getCurrentPosition(await currentPosition);
+      //await fetchData();
     }
   };
 
@@ -96,6 +96,7 @@ const Body = () => {
         <div className="flex">
           <div
             className="cursor-pointer m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-md"
+            title="Get Restaurants for Current Location"
             onClick={getLocation}
           >
             Location
