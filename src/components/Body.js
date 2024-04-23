@@ -17,14 +17,43 @@ const Body = () => {
   const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState(
     []
   );
+  const [coordinates, setCoordinates] = useState({
+    latitude: 19.063222,
+    longitude: 72.830396,
+  });
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const currentPosition = async (position) => {
+    console.log(position);
+    setCoordinates(position.coords);
+    await fetchData();
+  };
+
+  const getLocation = async () => {
+    if (navigator.geolocation) {
+      await navigator.geolocation.getCurrentPosition(currentPosition);
+    }
+  };
+
   const fetchData = async () => {
     try {
-      const restaurantData = await fetch(RESTAURANT_DATA_URL);
-      const resJson = await restaurantData.json();
+      //getLocation();
+      // const restaurantData = await fetch(
+      //   `${RESTAURANT_DATA_URL}lat=${coordinates.latitude}/&lng=${coordinates.longitude}`
+      // );
+      const restaurantData = await fetch(
+        `https://api.allorigins.win/get?url=${encodeURIComponent(
+          `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${coordinates.latitude}&lng=${coordinates.longitude}`
+        )}`
+      );
+      let resJson = await restaurantData.json();
+      let contentJson = resJson.contents;
+      console.log(resJson);
+      console.log(JSON.parse(contentJson));
+      resJson = resJson.data ? resJson : JSON.parse(contentJson);
       setlistOfRestaurants(
         resJson.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
           ?.restaurants
@@ -35,6 +64,15 @@ const Body = () => {
       );
     } catch (err) {
       console.log(`Error in fetching Restaurant Data: ${err.message}`);
+      console.log(resList);
+      setlistOfRestaurants(
+        resList.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      setFilteredListOfRestaurants(
+        resList.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
     }
   };
 
@@ -54,8 +92,14 @@ const Body = () => {
     return !listOfRestaurants?.length ? (
       <Shimmer page="home" />
     ) : (
-      <div className="w-11/12 m-auto">
+      <div className="w-9/12 m-auto pt-32">
         <div className="flex">
+          <div
+            className="cursor-pointer m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-md"
+            onClick={getLocation}
+          >
+            Location
+          </div>
           <div className="filter-container flex">
             <div>
               <button
@@ -108,6 +152,7 @@ const Body = () => {
           <div className="m-2">
             <input
               id="searchInputBox"
+              autoComplete="off"
               type="text"
               className="search-input outline-none border px-2 py-1 w-[450] rounded-lg focus:border-[#a09b9b] focus:shadow-lg transition-all duration-500"
               placeholder="Search here ..."

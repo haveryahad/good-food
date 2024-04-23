@@ -1,10 +1,10 @@
 const Shimmer = ({ page }) => {
-  const cardArray = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+  const cardArray = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
   const menuArray = new Array(0, 1, 2, 3, 4, 5, 6);
 
   const ShimmerCardHome = () => {
     return (
-      <div className="shimmer-card w-72 m-2 px-4">
+      <div className="shimmer-card w-72 m-2 px-4 animate-pulse">
         <div className="shimmer-res-image my-3 w-72 h-48 rounded-lg bg-shimmer"></div>
         <div className="shimmer-res-name w-48 h-6 rounded-lg bg-shimmer"></div>
         <div className="shimmer-res-row my-3 w-36 h-6 rounded-lg bg-shimmer"></div>
@@ -20,13 +20,13 @@ const Shimmer = ({ page }) => {
     );
   };
   return page === "home" ? (
-    <div className="shimmer-container flex flex-wrap justify-between w-11/12 m-auto py-14">
+    <div className="shimmer-container flex flex-wrap justify-between w-9/12 m-auto pt-40">
       {cardArray.map((item) => (
         <ShimmerCardHome key={item} />
       ))}
     </div>
   ) : (
-    <div className="shimmer-container flex flex-wrap justify-between items-center w-6/12 m-auto">
+    <div className="shimmer-container flex flex-wrap justify-between items-center w-6/12 m-auto pt-40">
       <div>
         <div className="shimmer-res-image my-3 w-72 h-8 rounded-lg bg-shimmer"></div>
         <div className="shimmer-res-name w-48 h-6 rounded-lg bg-shimmer"></div>
