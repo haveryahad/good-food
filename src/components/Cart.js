@@ -10,11 +10,11 @@ const Cart = () => {
     dispatch(clearCart());
   };
   return cartItems?.length === 0 ? (
-    <div className="text-4xl font-semibold m-auto w-6/12 text-center">
+    <div className="text-4xl font-semibold m-auto w-6/12 text-center pt-32">
       Cart is Empty
     </div>
   ) : (
-    <div className="m-auto w-6/12">
+    <div className="m-auto w-6/12 pt-32">
       <div className="text-xl font-bold text-center">Cart</div>
       <div
         className="text-md text-right cursor-pointer"
