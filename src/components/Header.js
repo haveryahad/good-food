@@ -16,19 +16,19 @@ const Header = () => {
   const cartItems = useSelector((store) => store.cart.items);
   console.log(cartItems);
   return (
-    <div className="shadow-md h-[98] bg-white fixed w-[100vw] z-20">
-      <div className="flex justify-between bg-white items-center w-9/12 m-auto mb-8">
-        <div className="w-56 h-24">
+    <div className="shadow-md h-[98] bg-white fixed w-full z-20">
+      <div className="sm:flex justify-between bg-white items-center w-9/12 m-auto mb-8">
+        <div className="w-56 h-24 m-auto">
           <Link to="/">
             <img
-              className="logo w-44 h-24 m-auto"
+              className="logo sm:w-44 sm:h-24 m-auto w-36 h-20"
               src={logo}
               alt="logo"
             ></img>
           </Link>
         </div>
         <div>
-          <ul className="flex items-center text-center m-4 [&>li]:m-4">
+          <ul className="hidden sm:flex items-center text-center m-4 [&>li]:m-4">
             <li>Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
             <li>
               <Link to="/">Home</Link>
@@ -36,13 +36,13 @@ const Header = () => {
             <li>
               <Link to="/about">About Us</Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/contact">Contact Us</Link>
-            </li>
+            </li> */}
             <Link to="/cart">
               <li className="w-20">Cart ({cartItems.length})</li>
             </Link>
-            <li className="box-border">
+            {/* <li className="box-border">
               <Link to="/signup">
                 <button
                   className="border box-border rounded-lg px-4 py-1 hover:bg-blue-300 hover:text-white"
@@ -55,7 +55,7 @@ const Header = () => {
                   {btnName}
                 </button>
               </Link>
-            </li>
+            </li> */}
             {/* <li>{loggedInUser}</li> */}
           </ul>
         </div>

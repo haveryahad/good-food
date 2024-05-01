@@ -93,18 +93,19 @@ const Body = () => {
       <Shimmer page="home" />
     ) : (
       <div className="w-9/12 m-auto pt-32">
-        <div className="flex">
-          <div
+        <div className="sm:flex">
+          {/* <div
             className="cursor-pointer m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-md"
             title="Get Restaurants for Current Location"
             onClick={getLocation}
           >
-            Location
-          </div>
+            <span>Location</span>
+            <span></span>
+          </div> */}
           <div className="filter-container flex">
             <div>
               <button
-                className="m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-md"
+                className="m-2 px-2 pr-3 py-1 text-sm sm:text-base rounded-2xl border-[#a09b9b] border shadow-md"
                 onClick={() => {
                   //Filter based on Average Rating
                   let filteredList = listOfRestaurants.filter(
@@ -118,7 +119,7 @@ const Body = () => {
             </div>
             <div>
               <button
-                className="m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-lg"
+                className="m-2 px-2 pr-3 py-1 text-sm sm:text-base rounded-2xl border-[#a09b9b] border shadow-lg"
                 onClick={() => {
                   //Filter based on Delivery Time
                   let filteredList = listOfRestaurants.filter(
@@ -140,7 +141,7 @@ const Body = () => {
             /> */}
             <div>
               <button
-                className="m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-lg"
+                className="m-2 px-2 pr-3 py-1 text-sm sm:text-base rounded-2xl border-[#a09b9b] border shadow-lg"
                 onClick={() => {
                   setFilteredListOfRestaurants(listOfRestaurants);
                   setSearchInput("");
@@ -155,7 +156,7 @@ const Body = () => {
               id="searchInputBox"
               autoComplete="off"
               type="text"
-              className="search-input outline-none border px-2 py-1 w-[450] rounded-lg focus:border-[#a09b9b] focus:shadow-lg transition-all duration-500"
+              className="search-input outline-none border px-2 py-1 text-sm sm:text-base sm:w-[450] w-full rounded-lg focus:border-[#a09b9b] focus:shadow-lg transition-all duration-500"
               placeholder="Search here ..."
               value={searchInput}
               onChange={(e) => {
@@ -180,7 +181,7 @@ const Body = () => {
             ></input>
           </div>
         </div>
-        <div className="res-container flex flex-wrap justify-between">
+        <div className="res-container flex flex-wrap sm:flex-row m-auto flex-col justify-between">
           {filteredListOfRestaurants.map((restaurant) => (
             <Link
               key={restaurant.info.id}
