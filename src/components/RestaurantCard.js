@@ -5,7 +5,7 @@ const RestaurantCard = (props) => {
   const { name, cuisines, avgRating, cloudinaryImageId } = props.restaurantData;
   const { deliveryTime } = props.restaurantData.sla;
   return (
-    <div className="res-card w-80 my-4">
+    <div className="res-card sm:w-80 w-60 m-auto my-4 text-sm sm:text-base">
       <div className="res-image-container">
         <img
           className="res-image w-80 h-48 object-cover rounded-xl shadow-xl"

@@ -33,12 +33,11 @@ class About extends React.Component {
     const { counter } = this.state;
     // Render Phase: Parent Render
     return (
-      <div className="w-4/12 m-auto border p-4">
-        <div className="font-bold text-center">About Us Page</div>
-        <User
-          {...userData}
-          componentType="Functional"
-        />
+      <div className="flex items-center justify-center pt-40">
+        <div className="w-4/12 m-auto border p-4">
+          <div className="font-bold text-center">About Us Page</div>
+          <User {...userData} />
+        </div>
       </div>
     );
   }
