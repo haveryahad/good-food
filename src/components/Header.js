@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
-  const onlineStatus = useOnlineStatus("header");
+  const onlineStatus = useOnlineStatus();
   const { loggedInUser } = useContext(UserContext);
 
   //Subscribing to redux store using selector
@@ -18,7 +18,7 @@ const Header = () => {
   return (
     <div className="shadow-md h-[98] bg-white fixed w-full z-20">
       <div className="sm:flex justify-between bg-white items-center w-9/12 m-auto mb-8">
-        <div className="w-56 h-24 m-auto">
+        <div className="w-56 h-24 m-auto sm:m-0">
           <Link to="/">
             <img
               className="logo sm:w-44 sm:h-24 m-auto w-36 h-20"
@@ -28,8 +28,11 @@ const Header = () => {
           </Link>
         </div>
         <div>
-          <ul className="hidden sm:flex items-center text-center m-4 [&>li]:m-4">
-            <li>Online Status: {onlineStatus ? "🟢" : "🔴"}</li>
+          <ul className="hidden md:flex items-center text-center m-4 [&>li]:m-4">
+            <li title="This shows whether you are connected to Internet or Offline">
+              <span className="hidden lg:inline">Online Status:</span>
+              {onlineStatus ? <span>🟢</span> : <span>🔴</span>}
+            </li>
             <li>
               <Link to="/">Home</Link>
             </li>

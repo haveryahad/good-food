@@ -76,7 +76,7 @@ const Body = () => {
     }
   };
 
-  const onlineStatus = useOnlineStatus("body");
+  const onlineStatus = useOnlineStatus();
 
   const TopRatedRestaurant = TopRestaurantCard(RestaurantCard);
   const FilterActiveButton = FilterActive(FilterButton);
@@ -84,16 +84,19 @@ const Body = () => {
 
   if (!onlineStatus)
     return (
-      <h1>You seem to be offline, Please check your internet connection. 🔌</h1>
+      <div className="flex justify-center items-center h-80">
+        <h1>
+          You seem to be offline, Please check your internet connection. 🔌
+        </h1>
+      </div>
     );
-  document.title = "Good Food React";
   try {
     //Conditional Rendering for Shimmer Effect
     return !listOfRestaurants?.length ? (
       <Shimmer page="home" />
     ) : (
       <div className="w-9/12 m-auto pt-32">
-        <div className="sm:flex">
+        <div className="md:flex">
           {/* <div
             className="cursor-pointer m-2 px-2 pr-3 py-1 rounded-2xl border-[#a09b9b] border shadow-md"
             title="Get Restaurants for Current Location"
@@ -156,7 +159,7 @@ const Body = () => {
               id="searchInputBox"
               autoComplete="off"
               type="text"
-              className="search-input outline-none border px-2 py-1 text-sm sm:text-base sm:w-[450] w-full rounded-lg focus:border-[#a09b9b] focus:shadow-lg transition-all duration-500"
+              className="search-input outline-none border px-2 py-1 text-sm sm:text-base sm:w-full md:w-[1/2] w-full rounded-lg focus:border-[#a09b9b] focus:shadow-lg transition-all duration-500"
               placeholder="Search here ..."
               value={searchInput}
               onChange={(e) => {
